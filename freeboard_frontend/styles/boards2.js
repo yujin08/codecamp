@@ -1,3 +1,5 @@
+// 내가 만든 boards index 파일
+
 import {
   Wrapper,
   PostWrapper,
@@ -14,6 +16,14 @@ import {
   ZipcodeInput,
   ZipcodeInput2,
   YoutubeInput,
+  ImgWrapper,
+  ImgButtonWrapper,
+  ImgButton,
+  OptionWrapper,
+  RadioButton,
+  RadioText,
+  ButtonWrapper,
+  SubmitButton,
 } from "../../styles/boards";
 
 export default function BoardsPage() {
@@ -63,11 +73,14 @@ export default function BoardsPage() {
       </ImgWrapper>
       <OptionWrapper>
         <Text>메인 설정</Text>
-        <RadioButton type="radio" id="youtube" name="radio-button" />
-        <RadioText htmlFor="youtube">유튜브</RadioText>
-        <RadioButton type="radio" id="image" name="radio-button" />
-        <RadioText htmlFor="image">사진</RadioText>
+        <RadioButton type="radio" />
+        <RadioText>유튜브</RadioText>
+        <RadioButton type="radio" />
+        <RadioText>사진</RadioText>
       </OptionWrapper>
+      <ButtonWrapper>
+        <SubmitButton>등록하기</SubmitButton>
+      </ButtonWrapper>
     </Wrapper>
   );
 }
