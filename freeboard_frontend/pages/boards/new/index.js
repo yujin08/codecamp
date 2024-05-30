@@ -23,9 +23,10 @@ import {
   Error,
 } from "../../../styles/boardsNew";
 import { useState } from "react";
-import { useMutation, gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 
-const CREATE_BOARDS = gql`
+const CREATE_BOARD = gql`
   mutation createBoard($createBoardInput: CreateBoardInput!) {
     createBoard(createBoardInput: $createBoardInput) {
       _id
@@ -34,6 +35,8 @@ const CREATE_BOARDS = gql`
 `;
 
 export default function BoardsNewPage() {
+  const router = useRouter();
+
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
@@ -44,21 +47,21 @@ export default function BoardsNewPage() {
   const [titleError, setTitleError] = useState("");
   const [contentsError, setContentsError] = useState("");
 
-  const [createBoard] = useMutation(CREATE_BOARDS);
+  const [createBoard] = useMutation(CREATE_BOARD);
 
-  function onChangeWriter(event) {
+  const onChangeWriter = (event) => {
     setWriter(event.target.value);
     if (event.target.value !== "") {
       setWriterError("");
     }
-  }
+  };
 
-  function onChangePassword(event) {
+  const onChangePassword = (event) => {
     setPassword(event.target.value);
     if (event.target.value !== "") {
       setPasswordError("");
     }
-  }
+  };
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -88,17 +91,22 @@ export default function BoardsNewPage() {
       setContentsError("내용을 입력해주세요.");
     }
     if (writer && password && title && contents) {
-      const result = await createBoard({
-        variables: {
-          createBoardInput: {
-            writer,
-            password,
-            title,
-            contents,
+      try {
+        const result = await createBoard({
+          variables: {
+            createBoardInput: {
+              writer,
+              password,
+              title,
+              contents,
+            },
           },
-        },
-      });
-      console.log(result);
+        });
+        console.log(result.data.createBoard._id);
+        router.push(`/boards/${result.data.createBoard._id}`);
+      } catch (error) {
+        alert(error.message);
+      }
     }
   };
 
