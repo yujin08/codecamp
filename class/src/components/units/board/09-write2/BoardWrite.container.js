@@ -29,10 +29,17 @@ export default function BoardWrite(props) {
       },
     });
     console.log(result);
-    router.push(`/section09/09-03-boards/${result.data.createBoard.number}`);
+    router.push(`/section09/09-04-boards/${result.data.createBoard.number}`);
   };
 
   const onClickUpdate = async () => {
+    const myvariables = {
+      number: Number(router.query.number),
+    };
+    if (writer) myvariables.title = writer;
+    if (title) myvariables.title = title;
+    if (contents) myvariables.title = contents;
+
     // 여기서 수정하기 하자!!
     const result = await updateBoard({
       variables: {
@@ -43,7 +50,7 @@ export default function BoardWrite(props) {
       },
     });
     console.log(result);
-    router.push(`/section09/09-03-boards/${result.data.updateBoard.number}`);
+    router.push(`/section09/09-04-boards/${result.data.updateBoard.number}`);
   };
 
   const onChangeWriter = (event) => {
@@ -67,6 +74,7 @@ export default function BoardWrite(props) {
         onChangeTitle={onChangeTitle}
         onChangeContents={onChangeContents}
         isEdit={props.isEdit}
+        data={props.data} // undefined 이거나, data 이거나 둘 중 하나!
       />
       <div>$$$$$$$$$$$$$$ 여기는 컨테이너입니다 $$$$$$$$$$$$</div>
     </div>
