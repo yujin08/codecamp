@@ -1,11 +1,14 @@
 {
   "scripts": {
-    "qqq": "ts-node index.ts"
+    "qqq": "ts-node index.ts",
+    "ddd": "ts-node decorator-example.ts"
   },
   "devDependencies": {
     "typescript": "^5.5.3"
   },
   "dependencies": {
+    "@apollo/server": "^4.10.4",
+    "graphql": "^16.9.0",
     "pg": "^8.12.0",
     "ts-node": "^10.9.2",
     "typeorm": "^0.3.20"
