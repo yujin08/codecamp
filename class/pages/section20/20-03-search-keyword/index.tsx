@@ -1,11 +1,12 @@
 import { useQuery, gql } from "@apollo/client";
-// import { useState } from "react";
+import { useState } from "react";
 import type {
   IQuery,
   IQueryFetchBoardsArgs,
 } from "../../../src/commons/types/generated/types";
 import type { ChangeEvent, MouseEvent } from "react";
 import _ from "lodash";
+import { v4 as uuidv4 } from "uuid";
 
 const FETCH_BOARDS = gql`
   query fetchBoards($page: Int, $search: String) {
@@ -20,6 +21,7 @@ const FETCH_BOARDS = gql`
 
 export default function StaticRoutingMovedPage(): JSX.Element {
   // const [search, setSearch] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards">,
@@ -33,6 +35,7 @@ export default function StaticRoutingMovedPage(): JSX.Element {
 
   const getDebounce = _.debounce((value) => {
     void refetch({ search: value, page: 1 });
+    setKeyword(value);
   }, 500);
 
   const onChangeSearch = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -50,7 +53,19 @@ export default function StaticRoutingMovedPage(): JSX.Element {
       {/* <button onClick={onClickSearch}>검색하기</button> */}
       {data?.fetchBoards.map((el) => (
         <div key={el._id}>
-          <span style={{ margin: "10px" }}>{el.title}</span>
+          <span style={{ margin: "10px" }}>
+            {el.title
+              .replaceAll(keyword, `@#$${keyword}@#$`)
+              .split("@#$")
+              .map((el) => (
+                <span
+                  key={uuidv4()}
+                  style={{ color: el === keyword ? "red" : "black" }}
+                >
+                  {el}
+                </span>
+              ))}
+          </span>
           <span style={{ margin: "10px" }}>{el.writer}</span>
         </div>
       ))}
