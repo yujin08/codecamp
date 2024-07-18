@@ -36,7 +36,9 @@ export default function StaticRoutingMovedPage(): JSX.Element {
     }
 
     // 3. 내가 클릭한거 추가하기
-    baskets.push(basket);
+    // delete basket.__typename // 안전하지 못한 사례
+    const { __typename, ...newBasket } = basket; // 안전한 사례
+    baskets.push(newBasket);
 
     // 4. 추가된 장바구니로 변경하기
     localStorage.setItem("baskets", JSON.stringify(baskets));

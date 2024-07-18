@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export const 로그인체크 = (컴포넌트: any) => (프롭스: any) => {
+export const useAuth = (): void => {
   const router = useRouter();
 
   useEffect(() => {
@@ -10,5 +10,4 @@ export const 로그인체크 = (컴포넌트: any) => (프롭스: any) => {
       void router.push("/section23/23-05-login-check-hoc");
     }
   }, []);
-  return <컴포넌트 {...프롭스} />;
 };
