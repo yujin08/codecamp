@@ -7,7 +7,7 @@ export default function BoardCommentListUI(
 ): JSX.Element {
   return (
     <div>
-      {props.data?.fetchBoardComments.map((el) => (
+      {props.data?.fetchBoardComments.map((el: any) => (
         <S.ItemWrapper key={el._id}>
           <S.FlexWrapper>
             <S.Avatar src="/images/avatar.png" />
