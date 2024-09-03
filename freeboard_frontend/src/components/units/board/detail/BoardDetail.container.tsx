@@ -17,7 +17,7 @@ export default function BoardDetail() {
     router.push(`/boards/${router.query.boardId}/edit`);
   };
 
-  const onClickDelete = (event) => {
+  const onClickDelete = () => {
     deleteBoard({
       variables: {
         boardId: router.query.boardId,
